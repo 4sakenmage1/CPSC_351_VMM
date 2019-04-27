@@ -9,13 +9,13 @@
 
 unsigned int binaryToDecimal(unsigned int binary_number);
 
-void getPageNumberAndOffset(unsigned int address, int & page_number, int & offset);
+void getPageNumberAndOffset(unsigned int address, unsigned int & page_number, unsigned int & offset);
 
 void readLogicalAddresses(char * address_file, unsigned int logicalAddressArray[]);
 
 int main(int argc, char **argv) {
 
-    char * buffer;
+    char * backing_store_buffer;
 
     std::ifstream is("BACKING_STORE.bin", std::ifstream::binary);
     if(is)
@@ -23,49 +23,32 @@ int main(int argc, char **argv) {
         is.seekg(0, is.end);
         int length = is.tellg();
         is.seekg(0, is.beg);
-        std::cout << "length is " << length;
 
+        backing_store_buffer = new char[length];
         
-        buffer = new char[length];
-        
+        is.read(backing_store_buffer,length);
 
-        is.read(buffer,length);
-        // int size = 256*256;
-        // for(int frame_number = 0; frame_number < 8; ++frame_number)
-        // {
-        //     for( int frame_index = 0; frame_index < 256; ++frame_index)
-        //     {
-        //         std::cout << +static_cast<unsigned char>(buffer[frame_number * 256 + frame_index]);
-        //     }
-        //     std::cout << "\n\n";
-        // }
-
-        
-        
         is.close();
     }
 
     // array of 1000 logical addresses
     unsigned int logicalAddresses[NUMBER_LOGICAL_ADDRESSES];
-    // fill the array of logical adddresses from addresses.txt file
+    // pass logicalAddresses array by reference to be filled with 'logical' addresses from addresses.txt file
     readLogicalAddresses(argv[1], logicalAddresses);
 
-    
+    // these two unsigned ints are to be passed by reference to the 'getPageNumberAndOffset' function
+    unsigned int frame_number, offset;
 
-    int frame_number, offset;
-
-    for (int i = 0; i < 20; ++i)
+    for (int i = 0; i < 5; ++i)
     {
-        // std::cout << logicalAddresses[i] << "\n";
+        // when this function finishes, both parameters contain updated pg number and offset values from the current logical address
         getPageNumberAndOffset(logicalAddresses[i], frame_number, offset);
-        std::cout << "frame_number : " << frame_number << " offset : " << offset << "\n";
-        //physical address = (frame number * byte size) + offset
-        std::cout << "value from buffer: " << +static_cast<unsigned char>(buffer[frame_number * BYTE_SIZE_256 + offset]) << "\n\n";
+        // we use these values to determine the physical address (which we get from the backing_store) 
+        // by this equation: physical address = (frame number * byte size) + offset
+        std::cout << i+1 << " value from backing_store_buffer: " << +static_cast<char>(backing_store_buffer[frame_number * BYTE_SIZE_256 + offset]) << "\n\n";
     }
 
-    
-    delete[] buffer;
-
+    delete[] backing_store_buffer;
     
     return 0;
 }
@@ -111,7 +94,7 @@ unsigned int binaryToDecimal(unsigned int binary_number)
     return decimal;
 }
 
-void getPageNumberAndOffset(unsigned int address, int & page_number, int & offset)
+void getPageNumberAndOffset(unsigned int address, unsigned int & page_number, unsigned int & offset)
 {
     std::string binary = std::bitset<16>(address).to_string();
     std::cout << binary << "\n";
@@ -127,8 +110,8 @@ void getPageNumberAndOffset(unsigned int address, int & page_number, int & offse
     std::cout << "left  most " << atoi( (page_number_str.c_str() )) << "\n";
     std::cout << "right most " << offset_str << "\n";
 
-    int pgnumber = binaryToDecimal( atoi( (page_number_str.c_str() )));
-    int off = binaryToDecimal( atoi( (offset_str.c_str() )));
+    unsigned int pgnumber = binaryToDecimal( atoi( (page_number_str.c_str() )));
+    unsigned int off = binaryToDecimal( atoi( (offset_str.c_str() )));
 
     std::cout << "page number converted to decimal = " << pgnumber << " <- index of page table\n";
     std::cout << "offset converted to decimal = " << off << "\n";
