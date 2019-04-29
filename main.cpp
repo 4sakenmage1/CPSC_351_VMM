@@ -3,15 +3,77 @@
 #include <fstream>
 #include <string>
 
-
 #define NUMBER_LOGICAL_ADDRESSES 1000
 #define BYTE_SIZE_256 256
+#define PAGE_TABLE_SIZE_256 256
+#define TLB_BUFFER_SIZE_16 16
 
-unsigned int binaryToDecimal(unsigned int binary_number);
+void getPageNumberAndOffset(u_int16_t address, u_int16_t & page_number, u_int16_t & offset);
 
-void getPageNumberAndOffset(unsigned int address, unsigned int & page_number, unsigned int & offset);
+void readLogicalAddresses(char * address_file, u_int16_t logicalAddressArray[]);
 
-void readLogicalAddresses(char * address_file, unsigned int logicalAddressArray[]);
+class PageTable
+{
+    public:
+    private:
+        uint16_t table[PAGE_TABLE_SIZE_256];
+};
+
+class MMU
+{
+    public:
+        MMU()
+        {
+            for(int i = 0; i < TLB_BUFFER_SIZE_16; ++i){
+                tlb_buffer[i] = -1;
+            }
+        }
+
+        bool checkTLB(uint16_t page_number)
+        {
+            bool entryFound = false;
+            uint16_t i = 0;
+
+            while(i < TLB_BUFFER_SIZE_16 && !entryFound )
+            {
+                if(tlb_buffer[i] == page_number)
+                    entryFound = true;
+                else if(tlb_buffer[i] == UNINITIALIZED) {
+                    // this simulates a TLB miss;
+                    // Since if we find a -1, then we must have checked all the previous initialized pages with no hits.
+                    // The TLB must not contain the page_number, and in fact the TLB still has uninitialized entries.
+                    // And so we simulate a TLB miss and we have to look up the value of the page_number from the page table
+                    look_up_entry_from_page_table(i, page_number);
+                }
+                ++i;
+            }
+            // if this returns false, then we will have to replace one of the pages 
+            // according to either the FIFO or LRU page-replacement algorithms
+            return entryFound;
+        }
+
+        void look_up_entry_from_page_table(uint16_t index, uint16_t page_number)
+        {
+            tlb_buffer[index] = page_number;
+        }
+
+        void replaceEntry()
+        {
+            // this is where we use a FIFO or LRU algorithm to replace one of the entries in the full TLB
+        }
+
+    private:
+        u_int16_t tlb_buffer[TLB_BUFFER_SIZE_16];
+        const int UNINITIALIZED = -1;
+};
+
+class BackingStore
+{
+    public:
+    private:
+    char * backing_store_buffer;
+
+};
 
 int main(int argc, char **argv) {
 
@@ -30,22 +92,38 @@ int main(int argc, char **argv) {
 
         is.close();
     }
+    else
+    {
+        std::cout << "Error opening BACKING_STORE.bin.  Exiting.\n";
+        return 1;
+    }
+    
+    MMU memory_management_unit;
 
     // array of 1000 logical addresses
-    unsigned int logicalAddresses[NUMBER_LOGICAL_ADDRESSES];
+    u_int16_t logicalAddresses[NUMBER_LOGICAL_ADDRESSES];
     // pass logicalAddresses array by reference to be filled with 'logical' addresses from addresses.txt file
     readLogicalAddresses(argv[1], logicalAddresses);
 
-    // these two unsigned ints are to be passed by reference to the 'getPageNumberAndOffset' function
-    unsigned int frame_number, offset;
+    // these two u_int16_ts (unsigned ints) are to be passed by reference to the 'getPageNumberAndOffset' function
+    u_int16_t page_number, offset;
 
-    for (int i = 0; i < 5; ++i)
+    for (int i = 0; i < 10; ++i)
     {
         // when this function finishes, both parameters contain updated pg number and offset values from the current logical address
-        getPageNumberAndOffset(logicalAddresses[i], frame_number, offset);
+        getPageNumberAndOffset(logicalAddresses[i], page_number, offset);
+
+        // the next step right here is to check the page_number against the TLB
+        std::cout << "checking TLB: for pg_number: " << page_number << "\n" 
+        << "entry " << (memory_management_unit.checkTLB(page_number) ? " found!\n" : "not found.\n");
+        // if there is a TLB hit, we then use the frame number * byte_size + offset to access the value from physical memory
+
+        // if there is a TLB miss, we then have to look up the frame_number from the page table
+
+
         // we use these values to determine the physical address (which we get from the backing_store) 
         // by this equation: physical address = (frame number * byte size) + offset
-        std::cout << i+1 << " value from backing_store_buffer: " << +static_cast<char>(backing_store_buffer[frame_number * BYTE_SIZE_256 + offset]) << "\n\n";
+        // std::cout << i+1 << " value from backing_store_buffer: " << +static_cast<char>(backing_store_buffer[page_number * BYTE_SIZE_256 + offset]) << "\n\n";
     }
 
     delete[] backing_store_buffer;
@@ -53,7 +131,7 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-void readLogicalAddresses(char * address_file, unsigned int logicalAddressArray[])
+void readLogicalAddresses(char * address_file, u_int16_t logicalAddressArray[])
 {
     std::ifstream ifs(address_file);
     int count = 0;
@@ -79,45 +157,21 @@ void readLogicalAddresses(char * address_file, unsigned int logicalAddressArray[
     std::cout << "count : "  << count << "\n";
 }
 
-unsigned int binaryToDecimal(unsigned int binary_number)
+void getPageNumberAndOffset(u_int16_t address, u_int16_t & page_number, u_int16_t & offset)
 {
-    int i = 0, decimal = 0;
-    while(binary_number > 0)
-    {
-        if(binary_number % 10 == 1)
-        {
-            decimal += 1 << i; 
-        }
-        binary_number /= 10;
-        i++;
-    }
-    return decimal;
-}
+    // these two lines are just for visualization purposes; they can be commented out and the VMM is unaffected
+    // std::string binary = std::bitset<16>(address).to_string();
+    // std::cout << binary << "\n";
 
-void getPageNumberAndOffset(unsigned int address, unsigned int & page_number, unsigned int & offset)
-{
-    std::string binary = std::bitset<16>(address).to_string();
-    std::cout << binary << "\n";
-
-    // shifting 8 bits to the right gives the 8 leftmost bits
+    // shifting 8 bits to the right gives the 8 leftmost bits, the PageNumber
     unsigned int left_most_8bits = address >> 8;
-    // masking the 8 right bits gives the 8 rightmost bits
+    // masking the 8 right bits gives the 8 rightmost bits, the Offset
     unsigned int right_most_8bits = address & 0xFF;
 
-    std::string page_number_str = (std::bitset<8>(left_most_8bits)).to_string();
-    std::string offset_str = (std::bitset<8>(right_most_8bits) ).to_string();
+    std::cout << "left_most_8bits = page number: " << left_most_8bits << " <- index of page table\n";
+    std::cout << "right_most_8bits = offset: " << right_most_8bits << "\n";
 
-    std::cout << "left  most " << atoi( (page_number_str.c_str() )) << "\n";
-    std::cout << "right most " << offset_str << "\n";
-
-    unsigned int pgnumber = binaryToDecimal( atoi( (page_number_str.c_str() )));
-    unsigned int off = binaryToDecimal( atoi( (offset_str.c_str() )));
-
-    std::cout << "page number converted to decimal = " << pgnumber << " <- index of page table\n";
-    std::cout << "offset converted to decimal = " << off << "\n";
-
-    page_number = pgnumber;
-    offset = off;
-
-    // unsigned char uchar = '0';  // unsigned char occupies 1 byte
+    // we passed page_number and offset unsigned ints by reference so we can gain access to them outside of this function
+    page_number = left_most_8bits;
+    offset = right_most_8bits;
 }
