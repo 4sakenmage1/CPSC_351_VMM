@@ -1,0 +1,3 @@
+﻿  Source.cpp
+c:\users\sami halwani\source\repos\tlb class\tlb class\source.cpp(105): warning C4715: 'TLB::addToTLB': not all control paths return a value
+  TLB Class.vcxproj -> C:\Users\Sami Halwani\source\repos\TLB Class\Debug\TLB Class.exe
