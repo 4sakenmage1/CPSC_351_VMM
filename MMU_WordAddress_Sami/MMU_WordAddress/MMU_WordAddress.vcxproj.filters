@@ -30,6 +30,9 @@
     <ClInclude Include="TLB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PCB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MemoryManagementUnit.cpp">

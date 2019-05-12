@@ -5,6 +5,7 @@
 #include <fstream>
 #include "Address.h"
 #include "tlb.h"
+#include "PCB.h"
 
 
 using namespace std;
@@ -14,24 +15,27 @@ class MemoryManagementUnit
 {
 	
 public:
-	MemoryManagementUnit();
+	MemoryManagementUnit()
+	{
 	
-	MemoryManagementUnit& instance();
+	};
 	
-	MemoryManagementUnit& operator= (MemoryManagementUnit& y);
+	MemoryManagementUnit& instance() {};
+	
+	MemoryManagementUnit& operator= (MemoryManagementUnit& y) {};
 
 	void read();
 	void displayDataValue(Address addresses);
 
-	void pageAccesses(Address addresses);
-	void pageFaults(Address addresses);
+	void pageAccesses(Word page);
+	void pageFaults(Word page);
 	
-	void tlbAccesses(Address addresses);
-	void tlbFaults(Address addresses);
+	void tlbAccesses(Word page);
+	void tlbFaults(Word page);
 
 	
 
-	void clearTLB(TLB& tlb);
+	void clearTLB();
 
 private:
 	MemoryManagementUnit();

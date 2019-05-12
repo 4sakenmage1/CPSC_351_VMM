@@ -1,5 +1,7 @@
 #include "tlb.h"
 #include "Address.h"
+#include "MemoryManagementUnit.h"
+#include "MemoryManagementUnit.cpp"
 #include <iostream>
 using namespace std;
 
@@ -7,16 +9,12 @@ using namespace std;
 TLB::TLB()
 {
 	// default values for variables
-
-	
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < TLB_SIZE; i++)
 	{
-		
-		tlb[i].page.value_ =  -1 ;
-		tlb[i].frame.value_ = -1 ;
+		TLBEntries[i].page.value_ = -1;
+		TLBEntries[i].frame.value_ = -1;
 		TLBHitRatio[i] = -1 ;
 	}
-
 	size = 0;
 }
 
@@ -34,11 +32,10 @@ bool TLB::isFull()
 // returns -1 if it doesn't exist
 int TLB::hit(Word pg)
 {
-	int position;
 
 	for (int i = 0; i < TLB_SIZE; i++)
 	{
-		if (tlb[i].page.value_ == pg.value_)
+		if (TLBEntries[i].page.value_ == pg.value_)
 		{
 			return i;
 		}
@@ -60,24 +57,24 @@ void TLB::access(Word pg)
 			for (int i = 0; i < TLB_SIZE; i++)
 			{
 				// first empty slot
-				if (TLBPageNumber[i] == -1)
+				// needs to reference page table to get frame number
+				if (TLBEntries[i].page.value_ == -1)
 				{
-					TLBPageNumber[i] = pg;
-					TLBFrameNumber[i] = // PageTableEntry.frameNumber;
-						TLBHitRatio[i] = 16;
+					TLBEntries[i].page.value_ = pg.value_;
+					TLBEntries[i].frame.value_ = ProccessControlBlock::page_table[pg.value_]; //???
+					TLBHitRatio[i] = 16;
 					size++;
 					break;
 				}
 			}
 		}
-
 		// if entry already exist in TLB, update hit ratio
 		else
 		{
 			for (int i = 0; i < TLB_SIZE; i++)
 			{
 				// decrement hit ratio if position is not empty and is not an entry
-				if (TLBHitRatio[i] != -1 && i != hit(pg))
+				if (TLBHitRatio[i] != -1)
 				{
 					TLBHitRatio[i]--;
 				}
@@ -93,7 +90,8 @@ void TLB::access(Word pg)
 		// then use page replacement algorithm and update fault counter
 		if (hit(pg) == -1)
 		{
-			tlbFaults(); // increase tlb_faults_ counter
+			
+			MMU.tlbFaults(pg); // increase tlb_faults_ counter
 			PageReplacementAlgorithm(); // call the replacement algorithm
 		}
 
@@ -103,11 +101,14 @@ void TLB::access(Word pg)
 		{
 			for (int i = 0; i < TLB_SIZE; i++)
 			{
-				if (TLBPageNumber[i] != pg)
+				// if entry is miss, decrement hit ratio
+				if (TLBEntries[i].page.value_ != pg.value_)
 				{
 					TLBHitRatio[i]--;
 				}
-				else if (TLBPageNumber[i] == pg)
+
+				// if the entry is a hit, then set hit ratio to 16
+				else if (TLBEntries[i].page.value_ == pg.value_)
 				{
 					TLBHitRatio[i] = 16;
 				}

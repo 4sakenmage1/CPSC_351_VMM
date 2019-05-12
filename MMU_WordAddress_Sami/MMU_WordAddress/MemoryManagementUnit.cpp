@@ -1,6 +1,7 @@
 #include "MemoryManagementUnit.h"
 #include "TLB.h"
 
+
 string iFile = "addresses.txt";
 Address addresses[1000];
 
@@ -32,7 +33,7 @@ void MemoryManagementUnit::read()
 
 	for (int i = 0; i < 1000; i++)
 	{
-		tlbAccesses(addresses[i]);
+		tlbAccesses(addresses[i].page);
 	}
 		
 
@@ -48,50 +49,48 @@ void MemoryManagementUnit::displayDataValue(Address addresses)
 		// std::cout << i+1 << " value from backing_store_buffer: " << +static_cast<char>(backing_store_buffer[page_number * BYTE_SIZE_256 + offset]) << "\n\n";
 }
 
- void MemoryManagementUnit::tlbAccesses(Address addresses)
+ void MemoryManagementUnit::tlbAccesses(Word page)
 {
 	 Word temp_Display;
 	tlb_access_count_++;
-	bool HitOrMiss = tlb.hit(addresses.page); // Step 1
+	bool HitOrMiss = tlb.hit(page); // Step 1
 
 	if (HitOrMiss == -1) // Miss	//Step2
 	{
-		tlbFaults(addresses); 
+		tlbFaults(page);
 	}
 	else// hit //Step 2
 	{
 		tlb_hits_++;
-		tlb.access(addresses.page);
+		tlb.access(page);
 		//Save to ram;
-		displayDataValue(addresses);
 
 	}
 };
 
-void MemoryManagementUnit::tlbFaults(Address addresses)
+void MemoryManagementUnit::tlbFaults(Word page)
 {
 	tlb_faults_++;
-	pageAccesses(addresses); //Step3
-	
+	pageAccesses(page); //Step3
 };
 
-void MemoryManagementUnit::pageAccesses(Address addresses)
+void MemoryManagementUnit::pageAccesses(Word page)
 {
 	page_access_count_++;
-	bool HitOrMiss = ProcessControlBlock::page_table.hit(addresses);
+	bool HitOrMiss = ProcessControlBlock::page_table.hit(page);
 
 	if(HitOrMiss == -1) //step 4
 	{
-		pageFaults(addresses);
+		pageFaults(page);
 	}
 	else
 	{
-		ProcessControlBlock::PCB.access(addresses);
+		ProcessControlBlock::PCB.access(page);
 	}
 
 };
 
-void MemoryManagementUnit::pageFaults(Address addresses)
+void MemoryManagementUnit::pageFaults(Word page)
 {
 	page_in_faults_++;
 
@@ -99,10 +98,12 @@ void MemoryManagementUnit::pageFaults(Address addresses)
 
 
 
-void MemoryManagementUnit::clearTLB(TLB& tlb)
+void MemoryManagementUnit::clearTLB()
 {
-	for (int i = 15; i >= 0; i--)
+	for (int i = 0; i < 16; i--)
 	{
-		
+		tlb.TLBEntries[i].page.value_ = -1;
+		tlb.TLBEntries[i].frame.value_ = -1;
+		tlb.TLBHitRatio[i] = -1;
 	}
 };

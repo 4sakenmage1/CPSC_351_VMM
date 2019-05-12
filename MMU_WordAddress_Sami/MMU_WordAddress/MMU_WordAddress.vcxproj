@@ -126,6 +126,7 @@
     <ClInclude Include="Address.h" />
     <ClInclude Include="MemoryManagementUnit.h" />
     <ClInclude Include="PageFault.h" />
+    <ClInclude Include="PCB.h" />
     <ClInclude Include="TLB.h" />
     <ClInclude Include="Word.h" />
   </ItemGroup>

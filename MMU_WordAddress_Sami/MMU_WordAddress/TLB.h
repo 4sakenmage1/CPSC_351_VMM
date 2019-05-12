@@ -5,6 +5,7 @@
 // tlb_faults_
 // tlb_access_count_
 #include "Address.h"
+#include "PageFault.h"
 
 #ifndef TLB_H
 #define TLB_H
@@ -14,8 +15,7 @@
 class TLB
 {
 private:
-	Address tlb[TLB_SIZE];  // array to hold the page numbers in the TLB
-	int TLBHitRatio[TLB_SIZE]; // array to hold the hit ratios in TLB
+
 	int size; // number of entries in TLB
 
 public:
@@ -24,6 +24,8 @@ public:
 	bool isFull();
 	int hit(Word pg);
 	void access(Word pg);
+	Address TLBEntries[TLB_SIZE];  // array to hold the page numbers in the TLB
+	int TLBHitRatio[TLB_SIZE]; // array to hold the hit ratios in TLB
 };
 
 #endif
