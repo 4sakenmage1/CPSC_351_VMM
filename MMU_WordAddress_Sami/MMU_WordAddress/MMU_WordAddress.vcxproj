@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Address.h" />
+    <ClInclude Include="LRU.h" />
     <ClInclude Include="MemoryManagementUnit.h" />
     <ClInclude Include="PageFault.h" />
     <ClInclude Include="PCB.h" />
@@ -131,8 +132,10 @@
     <ClInclude Include="Word.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LRU.cpp" />
     <ClCompile Include="MemoryManagementUnit.cpp" />
     <ClCompile Include="PCB.cpp" />
+    <ClCompile Include="Source.cpp" />
     <ClCompile Include="TLB.cpp" />
   </ItemGroup>
   <ItemGroup>

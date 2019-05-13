@@ -31,19 +31,19 @@ int PageTable::pagehit(Word pg)
 
 /// method searches table for pagenumber
 // returns the framenumber
-Word PageTable::access(Word pg)
+int PageTable::access(Word pg)
 {
 	// if there is a hit
 	if (pagehit(pg) != -1)
 	{
 		// return framenumber
-		return page_table[pagehit(pg)].frame;
+		return page_table[pagehit(pg)].frame.value_;
 	}
 
 	// if there is no entry in page table
 	else
 	{
-		pageFaults(); // call the pagefault method
+		//pageFaults(); // call the pagefault method
 		//fillTable(backingstore); // assuming pageFault will fill in a new page table. if not, then need another method to do so
 	}
 };

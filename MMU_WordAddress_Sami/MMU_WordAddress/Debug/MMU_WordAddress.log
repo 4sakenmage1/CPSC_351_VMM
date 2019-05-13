@@ -1,2 +1,90 @@
-﻿  MemoryManagementUnit.cpp
-C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\tlb.h(7): fatal error C1083: Cannot open include file: 'Addresses.h': No such file or directory
+﻿  LRU.cpp
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\PageFault.h(20): error C2011: 'PageFault': 'struct' type redefinition
+  C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\PageFault.h(8): note: see declaration of 'PageFault'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\tlb.h(10): fatal error C1083: Cannot open include file: 'FIFO.h': No such file or directory
+  MemoryManagementUnit.cpp
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\PageFault.h(20): error C2011: 'PageFault': 'struct' type redefinition
+  C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\PageFault.h(8): note: see declaration of 'PageFault'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(10): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(10): error C2146: syntax error: missing ';' before identifier 'MMU'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(13): error C2825: 'MemoryManagementUnit': must be a class or namespace when followed by '::'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(13): error C2510: 'MemoryManagementUnit': left of '::' must be a class/struct/union
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(39): error C3861: 'tlbAccesses': identifier not found
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(46): error C2825: 'MemoryManagementUnit': must be a class or namespace when followed by '::'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(46): error C2510: 'MemoryManagementUnit': left of '::' must be a class/struct/union
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(55): error C2825: 'MemoryManagementUnit': must be a class or namespace when followed by '::'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(55): error C2510: 'MemoryManagementUnit': left of '::' must be a class/struct/union
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(58): error C2065: 'tlb_access_count_': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(59): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(61): warning C4806: '==': unsafe operation: no value of type 'bool' promoted to type 'int' can equal the given constant
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(63): error C3861: 'tlbFaults': identifier not found
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(67): error C2065: 'tlb_hits_': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(68): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(74): error C2825: 'MemoryManagementUnit': must be a class or namespace when followed by '::'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(74): error C2510: 'MemoryManagementUnit': left of '::' must be a class/struct/union
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(76): error C2065: 'tlb_faults_': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(77): error C3861: 'pageAccesses': identifier not found
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(80): error C2825: 'MemoryManagementUnit': must be a class or namespace when followed by '::'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(80): error C2510: 'MemoryManagementUnit': left of '::' must be a class/struct/union
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(82): error C2065: 'page_access_count_': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(87): error C3861: 'pageFaults': identifier not found
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(92): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(97): error C2825: 'MemoryManagementUnit': must be a class or namespace when followed by '::'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(97): error C2510: 'MemoryManagementUnit': left of '::' must be a class/struct/union
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(99): error C2065: 'page_in_faults_': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(105): error C2825: 'MemoryManagementUnit': must be a class or namespace when followed by '::'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(105): error C2510: 'MemoryManagementUnit': left of '::' must be a class/struct/union
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(109): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(110): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(111): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\tlb.h(10): fatal error C1083: Cannot open include file: 'FIFO.h': No such file or directory
+  PCB.cpp
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(10): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(10): error C2146: syntax error: missing ';' before identifier 'MMU'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(13): error C2825: 'MemoryManagementUnit': must be a class or namespace when followed by '::'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(13): error C2510: 'MemoryManagementUnit': left of '::' must be a class/struct/union
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(39): error C3861: 'tlbAccesses': identifier not found
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(46): error C2825: 'MemoryManagementUnit': must be a class or namespace when followed by '::'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(46): error C2510: 'MemoryManagementUnit': left of '::' must be a class/struct/union
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(55): error C2825: 'MemoryManagementUnit': must be a class or namespace when followed by '::'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(55): error C2510: 'MemoryManagementUnit': left of '::' must be a class/struct/union
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(58): error C2065: 'tlb_access_count_': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(59): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(61): warning C4806: '==': unsafe operation: no value of type 'bool' promoted to type 'int' can equal the given constant
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(63): error C3861: 'tlbFaults': identifier not found
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(67): error C2065: 'tlb_hits_': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(68): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(74): error C2825: 'MemoryManagementUnit': must be a class or namespace when followed by '::'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(74): error C2510: 'MemoryManagementUnit': left of '::' must be a class/struct/union
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(76): error C2065: 'tlb_faults_': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(77): error C3861: 'pageAccesses': identifier not found
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(80): error C2825: 'MemoryManagementUnit': must be a class or namespace when followed by '::'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(80): error C2510: 'MemoryManagementUnit': left of '::' must be a class/struct/union
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(82): error C2065: 'page_access_count_': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(87): error C3861: 'pageFaults': identifier not found
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(92): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(97): error C2825: 'MemoryManagementUnit': must be a class or namespace when followed by '::'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(97): error C2510: 'MemoryManagementUnit': left of '::' must be a class/struct/union
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(99): error C2065: 'page_in_faults_': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(105): error C2825: 'MemoryManagementUnit': must be a class or namespace when followed by '::'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(105): error C2510: 'MemoryManagementUnit': left of '::' must be a class/struct/union
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(109): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(110): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(111): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\tlb.h(10): fatal error C1083: Cannot open include file: 'FIFO.h': No such file or directory
+  TLB.cpp
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.h(40): error C2535: 'MemoryManagementUnit::MemoryManagementUnit(void)': member function already defined or declared
+  C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.h(17): note: see declaration of 'MemoryManagementUnit::MemoryManagementUnit'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.h(45): error C3646: 'tlb': unknown override specifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.h(45): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\PageFault.h(20): error C2011: 'PageFault': 'struct' type redefinition
+  C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\PageFault.h(8): note: see declaration of 'PageFault'
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(59): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(61): warning C4806: '==': unsafe operation: no value of type 'bool' promoted to type 'int' can equal the given constant
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(68): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(92): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(109): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(110): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\MemoryManagementUnit.cpp(111): error C2065: 'tlb': undeclared identifier
+C:\Users\Sami Halwani\Desktop\CPSC_351_VMM\MMU_WordAddress_Sami\MMU_WordAddress\tlb.h(10): fatal error C1083: Cannot open include file: 'FIFO.h': No such file or directory
+  Generating Code...

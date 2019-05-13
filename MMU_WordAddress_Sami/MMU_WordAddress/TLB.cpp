@@ -1,13 +1,11 @@
-#include "tlb.h"
-#include "Address.h"
 #include "MemoryManagementUnit.h"
-#include "MemoryManagementUnit.cpp"
 #include <iostream>
 using namespace std;
 
 // Constructor
 TLB::TLB()
 {
+	
 	// default values for variables
 	for (int i = 0; i < TLB_SIZE; i++)
 	{
@@ -15,6 +13,7 @@ TLB::TLB()
 		TLBEntries[i].frame.value_ = -1;
 		TLBHitRatio[i] = -1 ;
 	}
+	
 	size = 0;
 }
 
@@ -61,7 +60,8 @@ void TLB::access(Word pg)
 				if (TLBEntries[i].page.value_ == -1)
 				{
 					TLBEntries[i].page.value_ = pg.value_;
-					TLBEntries[i].frame.value_ = ProccessControlBlock::page_table[pg.value_]; //???
+					
+					TLBEntries[i].frame.value_ = MMU.page_table.access(pg); //???
 					TLBHitRatio[i] = 16;
 					size++;
 					break;
@@ -92,7 +92,7 @@ void TLB::access(Word pg)
 		{
 			
 			MMU.tlbFaults(pg); // increase tlb_faults_ counter
-			PageReplacementAlgorithm(); // call the replacement algorithm
+			pageReplacementAlgorithm(pg); // call the replacement algorithm
 		}
 
 		// if page already exists in TLB
@@ -115,4 +115,10 @@ void TLB::access(Word pg)
 			}
 		}
 	}
+}
+
+void TLB::pageReplacementAlgorithm(Word page)
+{
+	Pagereplacement Alg;
+	Alg.replace(Alg.findVictim(TLBHitRatio, TLBEntries), TLBEntries, page);
 }

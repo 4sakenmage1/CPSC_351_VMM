@@ -1,9 +1,9 @@
 #pragma once
 #include <iostream>
-#include "PageFault.h"
 #include <fstream>
+#include "PageFault.h"
 #include "Address.h"
-#include "tlb.h"
+#include "TLB.h"
 #include "PCB.h"
 
 
@@ -16,9 +16,7 @@ class MemoryManagementUnit
 public:
 	MemoryManagementUnit()
 	{
-	
 	};
-	
 	MemoryManagementUnit& instance() {};
 	
 	MemoryManagementUnit& operator= (MemoryManagementUnit& y) {};
@@ -32,15 +30,15 @@ public:
 	void tlbAccesses(Word page);
 	void tlbFaults(Word page);
 
+	PageTable page_table;
 	
 
 	void clearTLB();
 
 private:
-	MemoryManagementUnit();
-
 	int page_access_count_ = 0;
 	int page_in_faults_ = 0;
+
 
 	TLB tlb;
 	int tlb_access_count_ = 0;

@@ -1,11 +1,13 @@
 #include "MemoryManagementUnit.h"
 #include "TLB.h"
+#include "PCB.h"
+
 
 
 string iFile = "addresses.txt";
 Address addresses[1000];
-
 MemoryManagementUnit MMU;
+
 
 void MemoryManagementUnit::read()
 {
@@ -51,7 +53,7 @@ void MemoryManagementUnit::displayDataValue(Address addresses)
 
  void MemoryManagementUnit::tlbAccesses(Word page)
 {
-	 Word temp_Display;
+	Word temp_Display;
 	tlb_access_count_++;
 	bool HitOrMiss = tlb.hit(page); // Step 1
 
@@ -77,15 +79,16 @@ void MemoryManagementUnit::tlbFaults(Word page)
 void MemoryManagementUnit::pageAccesses(Word page)
 {
 	page_access_count_++;
-	bool HitOrMiss = ProcessControlBlock::page_table.hit(page);
+	int HitOrMiss = page_table.pagehit(page);
 
 	if(HitOrMiss == -1) //step 4
 	{
 		pageFaults(page);
+		//call backing store
 	}
 	else
 	{
-		ProcessControlBlock::PCB.access(page);
+		.findVictim(page_table.access(page)));
 	}
 
 };
