@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <ctype.h>
 #include "PageFault.h"
 #include <fstream>
 #include "Address.h"

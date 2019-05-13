@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <ctype.h>
 using namespace std;
 
 struct Word
