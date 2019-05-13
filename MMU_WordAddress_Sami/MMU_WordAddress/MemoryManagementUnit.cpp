@@ -1,59 +1,47 @@
 #include "MemoryManagementUnit.h"
+#include "MemoryManager.h"
+#include "backingStore.h"
 #include "TLB.h"
-#include "PCB.h"
+#include "ram.h"
+#include <iostream>
 
-
-
-string iFile = "addresses.txt";
-Address addresses[1000];
-MemoryManagementUnit MMU;
-
-
-void MemoryManagementUnit::read()
+// To perform the address translations
+void getPageNumberAndOffset(int address, int & page_number, int & offset)
 {
-	ifstream iFile("addresses.txt");
-	if (iFile.is_open())
-	{
-		for (int i = 0; i < 1000; i++)
-		{
-			iFile >> addresses[i].address.value_;
-		}
-	}
-	iFile.close();
-
-	for (int i = 0; i < 1000; i++)
-	{
-		// shifting 8 bits to the right gives the 8 leftmost bits, the PageNumber
-		unsigned int left_most_8bits = addresses[i].address.value_ >> 8;
-		// masking the 8 right bits gives the 8 rightmost bits, the Offset
-		unsigned int right_most_8bits = addresses[i].address.value_ & 0xFF;
-
-		// we passed page_number and offset unsigned ints by reference so we can gain access to them outside of this function
-		addresses[i].page.value_ = left_most_8bits;
-		addresses[i].displacement.value_ = right_most_8bits;
-	}
-
-	for (int i = 0; i < 1000; i++)
-	{
-		tlbAccesses(addresses[i].page);
-	}
-		
-
-
-};
-
-void MemoryManagementUnit::displayDataValue(Address addresses)
-{
-	
-
-	cout << +static_cast<char>(addresses.page.value_ * 256 + addresses.displacement.value_) << endl;
-	
-		// std::cout << i+1 << " value from backing_store_buffer: " << +static_cast<char>(backing_store_buffer[page_number * BYTE_SIZE_256 + offset]) << "\n\n";
+    // shifting 8 bits to the right gives the 8 leftmost bits, the PageNumber
+    unsigned int left_most_8bits = address >> 8;
+    // masking the 8 right bits gives the 8 rightmost bits, the Offset
+    unsigned int right_most_8bits = address & 0xFF;
+    page_number = left_most_8bits;
+    offset = right_most_8bits;
 }
 
- void MemoryManagementUnit::tlbAccesses(Word page)
+Address MemoryManagementUnit::read(int logical_address)
 {
-	Word temp_Display;
+    // pass in the logical address received from the CPU, and separate it into its two constituent parts
+    // the page number and offset
+    int page_number, offset;
+    getPageNumberAndOffset(logical_address, page_number, offset);
+
+    // Assign the page number and offset to the passed in Page.
+    Address page;
+    Word word_pg, word_offset;
+    word_pg.value_     = page_number;
+    word_offset.value_ = offset;
+    page.address       = word_pg;
+    page.displacement  = word_offset;
+
+    return page;
+}
+
+void MemoryManagementUnit::displayDataValue(Address address)
+{
+    // cout the data value
+}
+
+void MemoryManagementUnit::tlbAccesses(Word page)
+{
+    Word temp_Display;
 	tlb_access_count_++;
 	bool HitOrMiss = tlb.hit(page); // Step 1
 
@@ -64,49 +52,78 @@ void MemoryManagementUnit::displayDataValue(Address addresses)
 	else// hit //Step 2
 	{
 		tlb_hits_++;
-		tlb.access(page);
+	    int frame_number = tlb.access(page);
 		//Save to ram;
+        physical_memory.memory.at(frame_number).physical_address = page.value_;
+        physical_memory.memory.at(frame_number).frame_number = frame_number;
+        
+        // Get the data value stored from the associated frame in physical memory
 
 	}
-};
+}
 
 void MemoryManagementUnit::tlbFaults(Word page)
 {
-	tlb_faults_++;
-	pageAccesses(page); //Step3
-};
+    tlb_faults_++;
+	pageAccesses(page);
+}
 
 void MemoryManagementUnit::pageAccesses(Word page)
 {
-	page_access_count_++;
-	int HitOrMiss = page_table.pagehit(page);
+    page_access_count_++;
+	bool HitOrMiss = ProcessControlBlock::page_table.hit(page);
 
 	if(HitOrMiss == -1) //step 4
 	{
 		pageFaults(page);
-		//call backing store
+        // access the backing_store
+
 	}
 	else
 	{
-		.findVictim(page_table.access(page)));
+		ProcessControlBlock::PCB.access(page);
+
+        int frame_number = PageTable.access(page);
+		//Save to ram;
+        physical_memory.memory.at(frame_number).physical_address = page.value_;
+        physical_memory.memory.at(frame_number).frame_number = frame_number;
 	}
+}
 
-};
-
-void MemoryManagementUnit::pageFaults(Word page)
+void MemoryManagementUnit::pageFaults(Address page)
 {
-	page_in_faults_++;
+    page_in_faults_++;
+    // get value from backing store
+    int data_value = b.read(page.address.value_, page.displacement.value_);
 
-};
+    // Get free frame from freeFrameList
+    
+    int frame_number = mm.getFrameNumber();
+    // insert page
+
+    //Save to ram;
+    physical_memory.memory.at(frame_number).data_value = data_value;
+    
+    PCB.ptbl.page_table.at
 
 
+}
 
 void MemoryManagementUnit::clearTLB()
 {
-	for (int i = 0; i < 16; i--)
+    for (int i = 0; i < 16; i--)
 	{
 		tlb.TLBEntries[i].page.value_ = -1;
 		tlb.TLBEntries[i].frame.value_ = -1;
 		tlb.TLBHitRatio[i] = -1;
 	}
-};
+}
+
+
+MemoryManagementUnit::MemoryManagementUnit()
+{
+    RAM physical_memory;
+    BackingStore b;
+    MemoryManager mm;
+    struct ProcessControlBlock PCB;
+}
